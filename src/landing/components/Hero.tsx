@@ -6,7 +6,7 @@ import Image from 'next/image';
 export default function Hero() {
   return (
     <section className="relative w-full h-[90vh] min-h-[600px] overflow-hidden">
-      <Image src="/hero.jpg" alt="Plastic waste across Indian communities" fill className="object-cover" priority />
+      <Image src="/hero.jpg" alt="Plastic waste across Indian communities" fill sizes="100vw" className="object-cover" priority />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
       <div className="absolute bottom-8 left-8 z-10">
@@ -16,7 +16,7 @@ export default function Hero() {
       </div>
 
       <div className="absolute bottom-8 right-8 left-[30%] z-10">
-        <h1 className="text-[clamp(2.5rem,7vw,7rem)] font-black leading-[0.95] tracking-tighter text-[#10b981] uppercase">
+        <h1 className="text-[clamp(2.5rem,7vw,7rem)] font-black leading-[0.95] tracking-tighter text-[#c5e017] uppercase">
           SCAN IT,<br/>SORT IT,<br/>COLLECT IT
         </h1>
       </div>
