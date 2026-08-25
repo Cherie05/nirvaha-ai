@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 
 const GithubIcon = ({ className }: { className?: string }) => (
   <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -22,9 +23,12 @@ export default function Footer() {
           <p className="font-mono-label text-black/60 text-[10px]">
             \u00A92026 NIRVAHA PLATFORM. TEAM THE TESSERACTIS (TEAM-109).
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4">
+            <Link href="/terms" className="font-mono-label text-black/80 text-[10px] hover:underline">TERMS</Link>
+            <Link href="/privacy" className="font-mono-label text-black/80 text-[10px] hover:underline">PRIVACY</Link>
+            
             <a href="https://github.com/Cherie05/nirvaha-ai" target="_blank" rel="noopener noreferrer"
-              className="font-mono-label text-black/80 text-[10px] border border-black/40 px-3 py-1 hover:bg-black hover:text-[#10b981] transition-colors flex items-center gap-2">
+              className="font-mono-label text-black/80 text-[10px] border border-black/40 px-3 py-1 hover:bg-black hover:text-[#10b981] transition-colors flex items-center gap-2 ml-4">
               <GithubIcon className="h-3 w-3" />
               GITHUB
             </a>
