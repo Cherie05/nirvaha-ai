@@ -5,32 +5,42 @@ import Image from 'next/image';
 
 export default function Hero() {
   return (
-    <section className="relative w-full h-[90vh] min-h-[600px] overflow-hidden">
+    <section className="relative w-full h-[90vh] min-h-[650px] overflow-hidden flex flex-col justify-between">
+      {/* Background */}
       <Image src="/hero.jpg" alt="Plastic waste across Indian communities" fill sizes="100vw" className="object-cover" priority />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+      <div className="absolute inset-0 bg-black/60" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
 
-      <div className="absolute bottom-8 left-8 z-10">
-        <p className="font-mono-label text-white/70 text-xs">
-          NIRVAHA<br/>AI PLASTIC<br/>AGGREGATION
-        </p>
+      {/* Top Navbar area - brings balance */}
+      <div className="relative z-10 flex items-start justify-between p-8">
+        <div>
+          <h2 className="text-white font-black text-2xl tracking-tighter">NIRVAHA</h2>
+          <p className="font-mono-label text-[#c5e017] text-[10px] mt-1">AI WASTE AGGREGATION</p>
+        </div>
+        <div className="text-right hidden sm:block">
+          <p className="font-mono-label text-white/70 text-[10px] mb-1">TEAM THE TESSERACTIS (TEAM-109)</p>
+          <p className="font-mono-label text-white/70 text-[10px]">BUILD WITH AI 2026 · GDG COIMBATORE</p>
+        </div>
       </div>
 
-      <div className="absolute bottom-8 right-8 left-[30%] z-10">
-        <h1 className="text-[clamp(2.5rem,7vw,7rem)] font-black leading-[0.95] tracking-tighter text-[#c5e017] uppercase">
-          SCAN IT,<br/>SORT IT,<br/>COLLECT IT
+      {/* Main Text - Left aligned, huge, anchored to container */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-8 pb-12 flex flex-col justify-end h-full">
+        <h1 className="text-[clamp(3.5rem,9vw,9rem)] font-black leading-[0.85] tracking-tighter text-[#c5e017] uppercase">
+          SCAN IT,
         </h1>
-      </div>
-
-      <div className="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-between px-8 py-3 border-t border-white/20">
-        <p className="font-mono-label text-white/60 text-[10px]">
-          TEAM THE TESSERACTIS · TEAM-109
-        </p>
-        <p className="font-mono-label text-white/60 text-[10px]">
-          BUILD WITH AI 2026 · GDG COIMBATORE
-        </p>
-        <p className="font-mono-label text-white/60 text-[10px]">
-          SUSTAINABLE CITIES TRACK
-        </p>
+        <h1 className="text-[clamp(3.5rem,9vw,9rem)] font-black leading-[0.85] tracking-tighter text-white uppercase">
+          SORT IT,
+        </h1>
+        <h1 className="text-[clamp(3.5rem,9vw,9rem)] font-black leading-[0.85] tracking-tighter text-[#c5e017] uppercase">
+          COLLECT IT.
+        </h1>
+        
+        {/* Supporting description right next to the massive text on desktop */}
+        <div className="mt-8 max-w-md border-l-2 border-[#c5e017] pl-4">
+          <p className="text-white/80 text-sm md:text-base leading-relaxed">
+            Eliminating the 30-minute sorting barrier for neighborhood shops. Identifying 7 resin codes instantly with Gemini AI.
+          </p>
+        </div>
       </div>
     </section>
   );
