@@ -12,17 +12,21 @@ export default function ImpactSection() {
         
         <div className="grid md:grid-cols-3 gap-8 border-t border-black/20 pt-8">
           <div>
-            <p className="text-5xl font-black mb-2">2,400<span className="text-2xl">KG</span></p>
+            <p className="text-5xl font-black mb-2">2,400*<span className="text-2xl">KG</span></p>
             <p className="font-mono-label text-black/70 text-xs">PLASTIC DIVERTED FROM LANDFILLS MONTHLY</p>
           </div>
           <div>
-            <p className="text-5xl font-black mb-2">₹72,000</p>
+            <p className="text-5xl font-black mb-2">₹72,000*</p>
             <p className="font-mono-label text-black/70 text-xs">MONTHLY REVENUE GENERATED FOR VENDORS</p>
           </div>
           <div>
             <p className="text-5xl font-black mb-2">100%</p>
             <p className="font-mono-label text-black/70 text-xs">TRANSPARENCY & TRACEABILITY OF MATERIAL</p>
           </div>
+        </div>
+
+        <div className="mt-6 text-right">
+          <p className="font-mono-label text-black/50 text-[10px]">*ESTIMATES BASED ON A PROJECTED AVERAGE OF 24KG PLASTIC WASTE PER USER/MONTH AT ₹30/KG. ACTUAL FIGURES MAY VARY.</p>
         </div>
       </div>
     </section>
