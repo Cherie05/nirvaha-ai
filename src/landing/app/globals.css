@@ -1,18 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap');
-
 @import "tailwindcss";
 
 @layer base {
   body {
     background-color: #e8e4df;
     color: #0c0c0c;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
   }
 }
 
 .font-mono-label {
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-space-mono), monospace;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-size: 11px;

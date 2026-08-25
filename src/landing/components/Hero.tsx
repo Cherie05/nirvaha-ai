@@ -7,11 +7,18 @@ export default function Hero() {
   return (
     <section className="relative w-full min-h-screen overflow-hidden flex flex-col justify-between">
       {/* Background */}
-      <Image src="/hero.jpg" alt="Plastic waste across Indian communities" fill sizes="100vw" className="object-cover" priority />
+      <Image 
+        src="/hero.jpg" 
+        alt="Plastic waste across Indian communities" 
+        fill 
+        sizes="100vw" 
+        className="object-cover" 
+        priority 
+      />
       <div className="absolute inset-0 bg-black/60" />
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
 
-      {/* Top Navbar area - brings balance */}
+      {/* Top Navbar area */}
       <div className="relative z-10 flex items-start justify-between p-8">
         <div>
           <h2 className="text-white font-black text-2xl tracking-tighter">NIRVAHA</h2>
@@ -23,7 +30,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Main Text - Left aligned, huge, anchored to container */}
+      {/* Main Text */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-8 pb-12 flex flex-col justify-end h-full">
         <h1 className="text-[clamp(3.5rem,9vw,9rem)] font-black leading-[0.95] tracking-tighter text-[#10b981] uppercase">
           SCAN IT,
@@ -35,11 +42,15 @@ export default function Hero() {
           COLLECT IT.
         </h1>
         
-        {/* Supporting description right next to the massive text on desktop */}
+        {/* Supporting description & CTA */}
         <div className="mt-8 max-w-md border-l-2 border-[#10b981] pl-4">
           <p className="text-white/80 text-sm md:text-base leading-relaxed">
             Eliminating the 30-minute sorting barrier for households, restaurants, and neighborhood shops. Identifying 7 resin codes instantly with Gemini AI.
           </p>
+          <a href="#demo" className="mt-6 inline-flex items-center gap-2 bg-[#10b981] text-black font-mono-label font-bold px-6 py-3 hover:bg-white transition-colors">
+            TRY THE LIVE DEMO 
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
         </div>
       </div>
     </section>
