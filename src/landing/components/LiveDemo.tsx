@@ -34,7 +34,7 @@ export default function LiveDemo() {
           </a>
 
           <a
-            href="/nirvaha.apk" download="nirvaha-v1.0.0-release.apk"
+            href="https://github.com/Cherie05/nirvaha-ai/releases"
             target="_blank"
             rel="noopener noreferrer"
             className="block bg-[#10b981] text-black p-8 hover:bg-[#059669] transition-colors group"
