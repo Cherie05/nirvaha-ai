@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ArrowUpRight, Sparkles, Recycle, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, Recycle } from 'lucide-react';
 
 const GithubIcon = ({ className }: { className?: string }) => (
   <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -11,29 +11,29 @@ const GithubIcon = ({ className }: { className?: string }) => (
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-50 border-b border-emerald-900/30 bg-[#040d08]/85 backdrop-blur-2xl">
+    <header className="sticky top-0 z-50 border-b-2 border-black bg-white/95 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-400 via-emerald-500 to-teal-700 shadow-xl shadow-emerald-500/25 border border-emerald-300/40">
+          <div className="flex h-11 w-11 items-center justify-center border-2 border-black bg-[#10b981] shadow-[3px_3px_0px_0px_#000]">
             <Recycle className="h-6 w-6 text-black" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-2xl font-black tracking-tighter text-white">NIRVAHA</span>
-              <span className="rounded-md bg-emerald-500/10 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-emerald-400 border border-emerald-500/20">
-                v1.0 LIVE
+              <span className="text-2xl font-black tracking-tighter text-black uppercase">NIRVAHA</span>
+              <span className="bkk-badge text-[10px]">
+                BUILD WITH AI 2026
               </span>
             </div>
-            <p className="text-[10px] font-medium text-slate-400">AI Plastic Waste Aggregation & B2B Logistics</p>
+            <p className="text-[11px] font-bold text-slate-700 tracking-tight">AI Plastic Waste Aggregation & B2B Logistics</p>
           </div>
         </div>
 
-        <nav className="hidden items-center gap-8 md:flex text-xs font-extrabold uppercase tracking-widest text-slate-300">
-          <a href="#model" className="hover:text-emerald-400 transition-colors">B2B Model</a>
-          <a href="#matrix" className="hover:text-emerald-400 transition-colors">Plastics Matrix</a>
-          <a href="#simulator" className="hover:text-emerald-400 transition-colors">Logistics Calc</a>
-          <a href="#metrics" className="hover:text-emerald-400 transition-colors">Validation</a>
-          <a href="#architecture" className="hover:text-emerald-400 transition-colors">Architecture</a>
+        <nav className="hidden items-center gap-8 md:flex text-xs font-black uppercase tracking-wider text-black">
+          <a href="#story" className="hover:bg-[#10b981] px-2 py-1 transition-all border border-transparent hover:border-black">The Field Insight</a>
+          <a href="#matrix" className="hover:bg-[#10b981] px-2 py-1 transition-all border border-transparent hover:border-black">7 Plastics Specs</a>
+          <a href="#calculator" className="hover:bg-[#10b981] px-2 py-1 transition-all border border-transparent hover:border-black">Route Calc</a>
+          <a href="#metrics" className="hover:bg-[#10b981] px-2 py-1 transition-all border border-transparent hover:border-black">Benchmarks</a>
         </nav>
 
         <div className="flex items-center gap-3">
@@ -41,21 +41,22 @@ export default function Navbar() {
             href="https://github.com/Cherie05/nirvaha-ai"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:flex items-center gap-2 rounded-xl border border-emerald-900/50 bg-slate-900/90 px-4 py-2.5 text-xs font-bold text-slate-200 transition-all hover:bg-slate-800 hover:border-emerald-500/40"
+            className="hidden sm:flex items-center gap-2 border-2 border-black bg-white px-4 py-2 text-xs font-black text-black shadow-[3px_3px_0px_0px_#000] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all"
           >
             <GithubIcon className="h-4 w-4" />
-            GitHub Code
+            GitHub
           </a>
           <a
             href="https://nirvaha-vendor.netlify.app"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-400 px-4 py-2.5 text-xs font-black text-black transition-all hover:brightness-110 shadow-lg shadow-emerald-500/20"
+            className="flex items-center gap-2 border-2 border-black bg-[#10b981] px-4 py-2 text-xs font-black text-black shadow-[3px_3px_0px_0px_#000] hover:bg-[#34d399] transition-all"
           >
             Live Vendor App
             <ArrowUpRight className="h-4 w-4" />
           </a>
         </div>
+
       </div>
     </header>
   );
