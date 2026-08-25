@@ -11,18 +11,16 @@ const GithubIcon = ({ className }: { className?: string }) => (
 export default function Footer() {
   return (
     <footer className="bg-[#10b981] border-t-4 border-black">
-      {/* Main CTA */}
       <div className="max-w-7xl mx-auto px-8 pt-16 pb-8">
         <h2 className="text-[clamp(2rem,5vw,5rem)] font-black leading-[1.0] tracking-tighter text-black uppercase mb-4">
-          DON'T FORGET,<br />YOUR PLASTIC CAN DO MORE
+          EVERY PLASTIC ITEM<br/>DESERVES A SECOND LIFE
         </h2>
       </div>
 
-      {/* Bottom bar */}
       <div className="border-t border-black/20 px-8 py-4">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <p className="font-mono-label text-black/60 text-[10px]">
-            ©2026 NIRVAHA PLATFORM. TEAM THE TESSERACTIS (TEAM-109).
+            \u00A92026 NIRVAHA PLATFORM. TEAM THE TESSERACTIS (TEAM-109).
           </p>
           <div className="flex items-center gap-4">
             <a href="https://github.com/Cherie05/nirvaha-ai" target="_blank" rel="noopener noreferrer"
@@ -38,10 +36,9 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Disclaimer */}
       <div className="bg-black/10 px-8 py-2">
         <p className="font-mono-label text-black/50 text-[10px] max-w-7xl mx-auto">
-          THIS PROJECT WAS BUILT DURING A 36-HOUR HACKATHON FOR COMMUNITY IMPACT, NOT COMMERCIAL USE.
+          BUILT DURING A 36-HOUR HACKATHON AT GDG COIMBATORE & TIE KOVAICON. NOW ENTERING PRE-INCUBATION.
         </p>
       </div>
     </footer>
