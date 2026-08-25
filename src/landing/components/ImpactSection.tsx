@@ -25,7 +25,7 @@ export default function ImpactSection() {
           </div>
         </div>
 
-        <div className="mt-6 text-right">
+        <div className="mt-12 pt-4 border-t border-black/20 text-left">
           <p className="font-mono-label text-black/50 text-[10px]">*ESTIMATES BASED ON 24KG PLASTIC/USER/MONTH. RECYCLING 1 TON OF PLASTIC SAVES ~1.5 TONS CO₂ AND 16.3 BARRELS OF OIL.</p>
         </div>
       </div>
