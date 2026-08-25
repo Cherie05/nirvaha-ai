@@ -5,6 +5,8 @@ answer out, and the plastic actually gets picked up.
 
 > "Vineeth photographs his plastic waste and Nirvaha tells him in seconds whether it's recyclable, what type, and roughly how much — or says it isn't sure."
 
+> 🚀 **Origin Story:** Nirvaha was built during the 36-hour *Build with AI 2026 Hackathon* (GDG Coimbatore / TiE KovaiCon). We are now taking this MVP forward into pre-incubation to scale circular waste collection across India.
+
 ---
 
 ## Try it
@@ -13,7 +15,7 @@ answer out, and the plastic actually gets picked up.
 |---|---|
 | **Vendor dashboard (live)** | https://nirvaha-vendor.netlify.app |
 | **Backend API (live)** | https://health-team-109-the-tesseractis-production.up.railway.app/api/health |
-| **Android app (APK)** | [v1.0-demo release](https://github.com/Build-with-AI-Code-for-Communities/health-team-109-the-tesseractis/releases/tag/v1.0-demo) |
+| **Android app (APK)** | [v1.0-demo release](https://github.com/Cherie05/nirvaha-ai/releases) |
 
 **Test accounts**
 
