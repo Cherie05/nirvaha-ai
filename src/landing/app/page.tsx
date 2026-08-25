@@ -1,3 +1,5 @@
+import ImpactSection from '@/components/ImpactSection';
+import TechStack from '@/components/TechStack';
 import DeveloperSection from '@/components/DeveloperSection';
 import Hero from '../components/Hero';
 import ProblemSection from '../components/ProblemSection';
@@ -15,6 +17,8 @@ export default function Home() {
       <FieldStory />
       <HowItWorks />
       <PlasticsGrid />
+      <ImpactSection />
+      <TechStack />
       <LiveDemo />
       <DeveloperSection />
       <Footer />
