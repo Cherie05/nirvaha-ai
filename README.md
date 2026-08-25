@@ -13,6 +13,7 @@ answer out, and the plastic actually gets picked up.
 
 | | |
 |---|---|
+| **Landing Page (live)** | https://nirvaha-landing.netlify.app |
 | **Vendor dashboard (live)** | https://nirvaha-vendor.netlify.app |
 | **Backend API (live)** | https://health-team-109-the-tesseractis-production.up.railway.app/api/health |
 | **Android app (APK)** | [v1.0-demo release](https://github.com/Cherie05/nirvaha-ai/releases) |
@@ -158,7 +159,7 @@ the vendor's board reorders itself while he is still holding his phone.
 | **Realtime** | Socket.IO gateway | A pickup request reaches the vendor's screen without a refresh. |
 | **AI** | Gemini (`gemini-3.1-flash-lite`) | Strict `responseSchema` output for material, weight and confidence. Keys rotate on failure. |
 | **AI fallback** | Ollama on the host — local only | Keeps the service degraded-but-alive if every Gemini key is exhausted. Not demo-grade, and not present on Railway — see limitations. |
-| **Hosting** | Railway (API + Postgres + Redis + bucket), Netlify (dashboard) | Same Dockerfile as local, `production` target. Nothing depends on a laptop being awake. |
+| **Hosting** | Railway (API + Postgres + Redis + bucket), Netlify (landing page + dashboard) | Same Dockerfile as local, `production` target. Nothing depends on a laptop being awake. |
 | **Local dev** | Ngrok, reserved domain | Public HTTPS so a real phone on mobile data can hit the laptop stack. Reserved so the URL survives a restart. |
 
 **No API keys in this repository.** The Gemini key lives in a `.env` file on the machine running Docker, gitignored and never committed.
