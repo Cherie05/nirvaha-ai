@@ -40,7 +40,7 @@ export default function DeveloperSection() {
               Nirvaha was rapidly prototyped and developed during the 36-hour GDG Coimbatore Build With AI 2026 Hackathon (Sustainable Cities Track). The platform integrates a Flutter mobile app, NestJS backend, WebSockets for real-time routing, and Gemini 1.5 Flash for vision AI.
             </p>
             <p className="font-mono-label text-neutral-500 text-xs">
-              DEVELOPER: ARUN V (TEAM-109)
+              DEVELOPERS: ARUNVPP, KALYAN DEVOJU (TEAM-109)
             </p>
           </div>
 
