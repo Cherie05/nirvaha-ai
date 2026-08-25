@@ -1,5 +1,14 @@
 # Nirvaha
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-10b981.svg)](./LICENSE)
+[![Flutter](https://img.shields.io/badge/Flutter-3.44-02569B.svg?logo=flutter&logoColor=white)](https://flutter.dev)
+[![NestJS](https://img.shields.io/badge/NestJS-10-E0234E.svg?logo=nestjs&logoColor=white)](https://nestjs.com)
+[![Next.js](https://img.shields.io/badge/Next.js-16-000000.svg?logo=next.js&logoColor=white)](https://nextjs.org)
+[![Gemini AI](https://img.shields.io/badge/Gemini_1.5_Flash-Vision_AI-8E75B2.svg?logo=google&logoColor=white)](https://ai.google.dev)
+[![Netlify](https://img.shields.io/badge/Netlify-Deployed-00C7B7.svg?logo=netlify&logoColor=white)](https://nirvaha-landing.netlify.app)
+[![Railway](https://img.shields.io/badge/Railway-Hosted-0B0D0E.svg?logo=railway&logoColor=white)](https://health-team-109-the-tesseractis-production.up.railway.app/api/health)
+
+
 **Plastic sorting and collection for small shop owners** — photo in, sorting
 answer out, and the plastic actually gets picked up.
 
