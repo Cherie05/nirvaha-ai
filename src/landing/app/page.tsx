@@ -1,3 +1,4 @@
+import DeveloperSection from '@/components/DeveloperSection';
 import Hero from '../components/Hero';
 import ProblemSection from '../components/ProblemSection';
 import FieldStory from '../components/FieldStory';
@@ -15,6 +16,7 @@ export default function Home() {
       <HowItWorks />
       <PlasticsGrid />
       <LiveDemo />
+      <DeveloperSection />
       <Footer />
     </main>
   );
