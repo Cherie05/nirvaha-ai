@@ -10,7 +10,7 @@ const GithubIcon = ({ className }: { className?: string }) => (
 
 export default function Footer() {
   return (
-    <footer className="bg-[#c5e017] border-t-4 border-black">
+    <footer className="bg-[#10b981] border-t-4 border-black">
       <div className="max-w-7xl mx-auto px-8 pt-16 pb-8">
         <h2 className="text-[clamp(2rem,5vw,5rem)] font-black leading-[1.0] tracking-tighter text-black uppercase mb-4">
           EVERY PLASTIC ITEM<br/>DESERVES A SECOND LIFE
@@ -24,12 +24,12 @@ export default function Footer() {
           </p>
           <div className="flex items-center gap-4">
             <a href="https://github.com/Cherie05/nirvaha-ai" target="_blank" rel="noopener noreferrer"
-              className="font-mono-label text-black/80 text-[10px] border border-black/40 px-3 py-1 hover:bg-black hover:text-[#c5e017] transition-colors flex items-center gap-2">
+              className="font-mono-label text-black/80 text-[10px] border border-black/40 px-3 py-1 hover:bg-black hover:text-[#10b981] transition-colors flex items-center gap-2">
               <GithubIcon className="h-3 w-3" />
               GITHUB
             </a>
             <a href="https://nirvaha-vendor.netlify.app" target="_blank" rel="noopener noreferrer"
-              className="font-mono-label text-black/80 text-[10px] border border-black/40 px-3 py-1 hover:bg-black hover:text-[#c5e017] transition-colors">
+              className="font-mono-label text-black/80 text-[10px] border border-black/40 px-3 py-1 hover:bg-black hover:text-[#10b981] transition-colors">
               VENDOR DASHBOARD
             </a>
           </div>

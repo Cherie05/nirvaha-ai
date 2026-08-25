@@ -29,7 +29,7 @@ export default function PlasticsGrid() {
             <div key={p.code} className="group">
               <div className={`${p.color} h-72 flex flex-col justify-end p-6 relative overflow-hidden transition-all duration-300 group-hover:scale-[1.02]`}>
                 <span className="absolute top-4 left-4 bg-black text-white font-mono-label text-xs px-2 py-1">{p.code}</span>
-                <span className="absolute top-4 right-4 bg-[#c5e017] text-black font-mono-label text-xs px-2 py-1">{p.rate} RECYCLABLE</span>
+                <span className="absolute top-4 right-4 bg-[#10b981] text-black font-mono-label text-xs px-2 py-1">{p.rate} RECYCLABLE</span>
                 <p className="text-xs text-neutral-700 font-medium">{p.items}</p>
               </div>
               <div className="pt-3 pb-4">
@@ -45,7 +45,7 @@ export default function PlasticsGrid() {
             <div key={p.code} className="group">
               <div className={`${p.color} h-56 flex flex-col justify-end p-6 relative overflow-hidden transition-all duration-300 group-hover:scale-[1.02]`}>
                 <span className="absolute top-4 left-4 bg-black text-white font-mono-label text-xs px-2 py-1">{p.code}</span>
-                <span className="absolute top-4 right-4 bg-[#c5e017] text-black font-mono-label text-xs px-2 py-1">{p.rate} RECYCLABLE</span>
+                <span className="absolute top-4 right-4 bg-[#10b981] text-black font-mono-label text-xs px-2 py-1">{p.rate} RECYCLABLE</span>
                 <p className="text-xs text-neutral-700 font-medium">{p.items}</p>
               </div>
               <div className="pt-3 pb-4">

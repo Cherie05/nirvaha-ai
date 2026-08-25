@@ -17,7 +17,7 @@ export default function FieldStory() {
           </div>
 
           <div>
-            <p className="font-mono-label text-[#c5e017] mb-4">THE 30-MINUTE BARRIER</p>
+            <p className="font-mono-label text-[#10b981] mb-4">THE 30-MINUTE BARRIER</p>
             <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-black uppercase leading-tight mb-6">
               "IF SORTING TAKES 30 MINUTES, I'LL JUST THROW IT ALL AWAY"
             </h2>

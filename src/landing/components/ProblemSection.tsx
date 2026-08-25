@@ -15,7 +15,7 @@ export default function ProblemSection() {
         <div className="grid md:grid-cols-3 gap-12">
 
           <div>
-            <p className="font-mono-label text-[#c5e017] text-sm mb-6">01</p>
+            <p className="font-mono-label text-[#10b981] text-sm mb-6">01</p>
             <h3 className="text-xl font-black uppercase leading-tight mb-4">
               SHOPKEEPERS CAN'T TELL{' '}
               <span className="highlight-text">PET FROM HDPE</span>
@@ -26,7 +26,7 @@ export default function ProblemSection() {
           </div>
 
           <div>
-            <p className="font-mono-label text-[#c5e017] text-sm mb-6">02</p>
+            <p className="font-mono-label text-[#10b981] text-sm mb-6">02</p>
             <h3 className="text-xl font-black uppercase leading-tight mb-4">
               ONE SHOP'S PLASTIC{' '}
               <span className="highlight-text">ISN'T WORTH A TRIP</span>
@@ -37,7 +37,7 @@ export default function ProblemSection() {
           </div>
 
           <div>
-            <p className="font-mono-label text-[#c5e017] text-sm mb-6">03</p>
+            <p className="font-mono-label text-[#10b981] text-sm mb-6">03</p>
             <h3 className="text-xl font-black uppercase leading-tight mb-4">
               AGGREGATED PLASTIC IS{' '}
               <span className="highlight-text">A PROFITABLE COMMODITY</span>
