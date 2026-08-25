@@ -1,0 +1,115 @@
+NIRVAHA — TEST ACCOUNTS
+The Tesseractis (TEAM-109) · Tech for Good 2026
+=====================================================================
+
+No signup. No OTP. These accounts are seeded automatically every time the
+backend boots, so they always exist on a fresh database — on the deployed
+Railway instance and on a local Docker stack alike.
+
+WHERE TO USE THEM
+-----------------
+  Vendor dashboard (live)  https://nirvaha-vendor.netlify.app
+  Backend API (live)       https://health-team-109-the-tesseractis-production.up.railway.app/api/health
+  Android app              installed APK, already pointed at the Railway API
+
+Nothing needs to be running on our laptop for these to work.
+
+
+---------------------------------------------------------------------
+HOUSEHOLD  (Flutter app)
+---------------------------------------------------------------------
+
+  email     test@gmail.com
+  password  test@1234
+
+  Name      Test User
+  Role      USER
+  Address   12 Thadagam Road, RS Puram
+  Zone      RS Puram
+  Location  11.0069, 76.9525
+
+  Use this on the phone. Scan -> "Add to Digital Bin" -> the bin fills
+  toward the 2.0 KG pickup threshold.
+
+
+---------------------------------------------------------------------
+VENDOR  (React dashboard, http://localhost:5173)
+---------------------------------------------------------------------
+
+  email     vendor@gmail.com
+  password  vendor@1234
+
+  Name      Coimbatore Scrap Traders
+  Role      VENDOR
+  Warehouse Plot 8, Singanallur Industrial Estate, Coimbatore
+  Location  11.0021, 77.0281
+
+  The warehouse is the route origin on the map.
+
+
+---------------------------------------------------------------------
+NEIGHBOUR HOUSEHOLDS  (make the map look like a network)
+---------------------------------------------------------------------
+
+  neighbour1@gmail.com / test@1234   Anita R      Peelamedu
+  neighbour2@gmail.com / test@1234   Suresh K     Gandhipuram
+  neighbour3@gmail.com / test@1234   Lakshmi M    Saibaba Colony
+
+  All households share the same password: test@1234
+
+
+---------------------------------------------------------------------
+OTP
+---------------------------------------------------------------------
+
+There is no SMS provider. If an OTP screen is shown, the fixed code is:
+
+  123456
+
+Configured by DEMO_OTP in src/backend/.env. Login alone already returns a
+token, so the OTP screen is optional — the app works with or without it.
+
+
+---------------------------------------------------------------------
+SIGNUP IS DISABLED
+---------------------------------------------------------------------
+
+POST /api/auth/register returns 403 "Signup is disabled for this demo."
+Controlled by ALLOW_REGISTRATION=false in src/backend/.env.
+Use the accounts above.
+
+
+---------------------------------------------------------------------
+CHANGING THEM
+---------------------------------------------------------------------
+
+All values live in src/backend/.env :
+
+  DEMO_EMAIL=test@gmail.com
+  DEMO_PASSWORD=test@1234
+  DEMO_OTP=123456
+  ALLOW_REGISTRATION=false
+
+The seeder re-syncs the password hash on every boot, so editing
+DEMO_PASSWORD and restarting is enough — no manual database work.
+
+  docker compose up -d -V api
+
+
+---------------------------------------------------------------------
+SERVICE AREA
+---------------------------------------------------------------------
+
+Coimbatore only. The map is locked to this bounding box and geocoding
+rejects anything outside it:
+
+  lat  10.90 .. 11.10        lon  76.85 .. 77.10
+  centre 11.0168, 76.9558
+
+Known zones: RS Puram · Peelamedu · Gandhipuram · Saibaba Colony ·
+             Singanallur · Ukkadam · Saravanampatti · Kuniamuthur
+
+=====================================================================
+This file contains DEMO credentials only. Real secrets (Gemini keys,
+ngrok token, JWT secret) live in src/backend/.env, which is gitignored.
+=====================================================================

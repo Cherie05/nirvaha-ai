@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design tokens ─────────────────────────────────────────────────
+   The same palette the Nirvaha app uses, so a vendor and a household
+   are visibly looking at two halves of one product.                  */
+:root {
+  --nv-canvas: #f4f6f5;
+  --nv-ink: #0b1f14;
+  --nv-muted: #6b7b72;
+  --nv-faint: #9aa8a1;
+  --nv-line: #e6ebe8;
+  --nv-brand: #059669;
+  --nv-brand-deep: #047857;
+  --nv-brand-dark: #065f46;
+  --nv-brand-soft: #e6f7ef;
+}
+
+/* ── Typography ────────────────────────────────────────────────────
+   The same typeface the Nirvaha app bundles, self-hosted rather than
+   pulled from Google. Venue wifi must never be able to change how the
+   console looks mid-demo, and a font request to a third party is one
+   more thing that can hang.                                          */
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('/fonts/PlusJakartaSans-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+    U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('/fonts/PlusJakartaSans-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+    U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+    U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--nv-canvas);
+  color: var(--nv-ink);
+}
+
+/* Headings run tight; body text stays open. That contrast is most of
+   what makes a layout read as designed rather than merely spaced. */
+h1, h2, h3 {
+  letter-spacing: -0.03em;
+}
+
+/* Numbers in tables and stat blocks should line up column to column. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* One card shape for the whole console: white, generously rounded,
+   floating on the near-white ground rather than outlined on it. */
+.soft-card {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow:
+    0 8px 24px -4px rgba(11, 31, 20, 0.06),
+    0 2px 4px rgba(11, 31, 20, 0.03);
+}
+
+/* Cards lift slightly on hover so the grid feels responsive to the cursor. */
+.card-hover {
+  transition: box-shadow 180ms ease, transform 180ms ease;
+}
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 18px 36px -12px rgba(11, 31, 20, 0.16),
+    0 2px 6px rgba(11, 31, 20, 0.04);
+}
+
+/* ── Leaflet popup sizing ──────────────────────────────────────────
+   Leaflet's defaults are generous: 13px/1.4 text plus 13px/19px padding
+   on every popup. With a five-material breakdown that overflows the map
+   and the top of the card gets clipped. These rules keep any popup inside
+   the viewport regardless of which zone is clicked or where it sits.     */
+
+.leaflet-popup-content-wrapper {
+  border-radius: 18px;
+  padding: 2px;
+  box-shadow: 0 14px 34px -8px rgba(11, 31, 20, 0.24);
+}
+
+.leaflet-popup-content {
+  margin: 10px 12px;
+  line-height: 1.35;
+  /* Never taller than the map can show, minus room for the tip + padding. */
+  max-height: min(300px, calc(100vh - 320px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Tailwind's preflight resets margins, but Leaflet injects its own. */
+.leaflet-popup-content p {
+  margin: 0;
+}
+
+/* A thin scrollbar so a long breakdown does not look broken. */
+.leaflet-popup-content::-webkit-scrollbar {
+  width: 6px;
+}
+.leaflet-popup-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+/* Popups must sit above the route polyline and zone circles. */
+.leaflet-popup {
+  z-index: 700;
+}

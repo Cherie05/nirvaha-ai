@@ -1,0 +1,41 @@
+# Netlify build config for the Nirvaha vendor dashboard.
+#
+# Committing this means the Netlify UI needs NOTHING typed into it — import the
+# repo and press Deploy. Settings typed into a web form at 8am are the ones that
+# get typed wrong, and they are invisible to anyone else on the team.
+#
+# The repo holds three things (Flutter app, NestJS backend, React dashboard).
+# Only the dashboard is a static site, so `base` points Netlify at it and the
+# other two are ignored.
+
+[build]
+  base    = "src/vendor-dashboard"
+  command = "npm run build"
+  # Relative to `base`, i.e. src/vendor-dashboard/dist — Vite's output folder.
+  publish = "dist"
+
+[build.environment]
+  # Vite 5 needs Node 18+. Pinned so a Netlify default change cannot break the
+  # build the morning of a demo.
+  NODE_VERSION = "20"
+
+  # Where the deployed dashboard sends its API calls.
+  #
+  # Railway, not the laptop tunnel. Everything the judge touches is now hosted:
+  # this page on Netlify, the API and Postgres/Redis/object storage on Railway.
+  # Nothing depends on a laptop being awake.
+  #
+  # Set here rather than in the Netlify UI so a rebuild can never silently lose
+  # it and fall back to localhost.
+  #
+  # The ngrok tunnel still exists for local development against a real phone —
+  # see commands.txt — it is simply no longer what the deployed site uses.
+  VITE_API_BASE_URL = "https://health-team-109-the-tesseractis-production.up.railway.app"
+
+# The dashboard is a single page with tab state, not a router, so this is not
+# needed today. It is here so that adding real routes later cannot produce a
+# 404-on-refresh that nobody remembers how to fix.
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200

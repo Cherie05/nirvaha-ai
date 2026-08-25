@@ -1,0 +1,562 @@
+NIRVAHA — RUNBOOK
+The Tesseractis (TEAM-109) · Tech for Good 2026
+=====================================================================
+
+
+#####################################################################
+#                                                                   #
+#   0. START EVERYTHING  —  READ THIS FIRST AFTER A PC RESTART      #
+#                                                                   #
+#####################################################################
+
+  <repo> below means YOUR OWN copy of this project folder — it is a
+  different path for each of us:
+      Arun    C:\Users\arunv\Documents\health-team-109-the-tesseractis
+      Kalyan  C:\Users\kalya\projects\health-team-109-the-tesseractis
+  Substitute your own. If a terminal is already inside the project you can
+  skip the `cd` entirely.
+
+You do NOT need any of the sections below to get running. One command
+starts the backend, the ngrok tunnel and the vendor website together.
+
+  >>> ONLY ONE LAPTOP RUNS THE TUNNEL. <<<
+  We share a single reserved ngrok domain. If a second machine starts the
+  tunnel, whoever connects last takes the domain and the other is dropped —
+  and if the one dropped is the demo laptop, the phone dies mid-demo.
+  On the machine that is NOT demoing, start the backend WITHOUT the tunnel:
+      cd <repo>\src\backend
+      docker compose up -d
+
+  OPTION A — paste these two lines into Windows Terminal / PowerShell:
+
+      cd <repo>
+      .\start-demo.bat
+
+  OPTION B — no typing: open File Explorer, go to
+
+      <repo>
+
+    and double-click the file named  start-demo
+
+Takes about 70 seconds from cold. Safe to run again any time — if
+something is already running it says so and leaves it alone.
+
+
+WHAT A GOOD RUN LOOKS LIKE
+--------------------------
+Five steps, every one saying [ OK ]:
+
+    [1] Docker Desktop          [ OK ]
+    [2] Backend stack + ngrok   [ OK ] API healthy on http://localhost:3000
+    [3] Public tunnel           [ OK ] matches your reserved domain
+    [4] Ollama fallback         [ OK ]
+    [5] Vendor dashboard        [ OK ] http://localhost:5173
+        READY
+
+  >>> STEP 3 IS THE ONE THAT DECIDES WHETHER THE PHONE WORKS. <<<
+  It compares the live tunnel URL against the address compiled into the
+  installed APK. If it warns instead of saying "matches", the app on the
+  phone will NOT connect — see the recovery line at the bottom of 2b.
+
+Then it prints "Press any key to continue" — press any key to close.
+Leave the OTHER window (the vendor dashboard) open; closing it stops
+the website.
+
+
+AFTER IT SAYS READY, CHECK THE PHONE
+------------------------------------
+Green output only proves the laptop is fine. Open the Nirvaha app:
+  1. Pull down to refresh — the red offline banner must NOT appear
+  2. Take one scan — a result should come back in a few seconds
+If step 1 works, the phone and the tunnel agree and you are ready.
+
+
+DEPLOYED — LIVE, NOTHING ON THIS LAPTOP
+---------------------------------------
+  Vendor dashboard   https://nirvaha-vendor.netlify.app
+  Backend health     https://health-team-109-the-tesseractis-production.up.railway.app/api/health
+
+  >>> THE INSTALLED APK POINTS AT RAILWAY, NOT AT THIS LAPTOP. <<<
+  The phone works whether or not anything here is running. Starting the local
+  stack does NOT change what the phone talks to — that is compiled into the
+  APK at build time.
+
+  To point the phone back at the LOCAL stack you must rebuild and reinstall:
+      cd src\nirvaha
+      flutter build apk --release --dart-define=API_BASE_URL=https://<tunnel-or-lan>
+      adb install -r build/app/outputs/flutter-apk/app-release.apk
+      adb shell pm clear com.nirvaha.nirvaha
+
+
+WHERE THINGS LIVE ONCE THE LOCAL STACK IS UP
+--------------------------------------------
+  Vendor dashboard   http://localhost:5173
+  Backend health     http://localhost:3000/api/health
+  Local tunnel       https://renovator-sublime-pep.ngrok-free.dev
+                     (development only — the deployed app does not use it)
+  Request inspector  http://localhost:4040
+
+  Household login    test@gmail.com   / test@1234
+  Vendor login       vendor@gmail.com / vendor@1234
+  (same accounts on Railway — seeded on first boot there too)
+
+
+TO STOP EVERYTHING
+------------------
+1. Backend + ngrok tunnel (one command stops all five containers):
+
+     cd <repo>\src\backend
+     docker compose --profile tunnel down
+
+   >>> NEVER add -v to that command. <<<
+   -v deletes the volumes: every scan, every pickup, every kilogram of
+   history, and the pre-loaded demo bin. Without -v all of it survives.
+
+2. Vendor dashboard — close the separate PowerShell window that says
+   "leave this window open", or press Ctrl+C inside it.
+
+3. Ollama (optional — it costs almost nothing idle):
+
+     Get-Process ollama | Stop-Process -Force
+
+
+TO STOP ONLY THE TUNNEL, LEAVING THE BACKEND UP
+-----------------------------------------------
+Useful if you are handing the reserved domain to a teammate's laptop, or
+you want the API local-only for a while.
+
+  cd <repo>\src\backend
+  docker compose stop ngrok
+
+Bring it back with:
+
+  docker compose --profile tunnel up -d ngrok
+
+ONLY ONE MACHINE AT A TIME can hold the reserved domain. If a second
+laptop starts ngrok with the same NGROK_DOMAIN, one of you is kicked off —
+and if it is the demo laptop, the phone stops working mid-demo.
+
+
+TO START IT ALL AGAIN
+---------------------
+  cd <repo>
+  .\start-demo.bat
+
+70 seconds, measured from a cold start with no containers. The ngrok URL
+comes back IDENTICAL because the domain is reserved, so the installed APK
+keeps working with no rebuild.
+
+Start it again about 15 MINUTES BEFORE you are due to demo, so there is
+time to check the phone connects before anyone is watching.
+
+
+IF A STEP FAILS
+---------------
+The script names the failing step and prints what to run. Usually:
+
+  cd <repo>\src\backend
+  docker compose logs api   --tail 40      # step 2 failed
+  docker compose logs ngrok --tail 30      # step 3 failed
+
+#####################################################################
+
+Everything below is the manual, piece-by-piece version. You only need
+it if the launcher fails or you are changing how something works.
+
+All commands run from:  src/backend
+Prereqs: Docker Desktop running. Ollama running (only for the local-AI path).
+
+
+---------------------------------------------------------------------
+1. LOCAL ONLY  (no public URL — laptop and emulator)
+---------------------------------------------------------------------
+
+  cd src/backend
+  docker compose up -d
+
+  # wait ~30s, then confirm all four are healthy
+  docker compose ps
+
+  # must return status:ok
+  curl http://localhost:3000/api/health
+
+Services that start: api(3000) postgres(5432) redis(6379) minio(9000/9001)
+MinIO console:       http://localhost:9001   (user/pass from .env)
+
+Stop:                docker compose down
+Stop + wipe data:    docker compose down -v      # deletes scans + images
+
+
+---------------------------------------------------------------------
+2. PUBLIC TUNNEL  (phone on mobile data / judging)
+---------------------------------------------------------------------
+
+ngrok runs as a container behind the "tunnel" profile, so it never starts
+unless you ask for it.
+
+  cd src/backend
+  docker compose --profile tunnel up -d
+
+  # get the public URL
+  curl -s http://localhost:4040/api/tunnels
+
+  # or just open the inspector in a browser
+  #   http://localhost:4040
+
+Verify THROUGH the tunnel (replace <URL>):
+
+  curl -H "ngrok-skip-browser-warning: true" <URL>/api/health
+
+Stop only the tunnel, leave the backend up:
+
+  docker compose stop ngrok
+
+  >>> DO THIS BEFORE YOU DEMO: CLAIM THE STATIC DOMAIN <<<
+
+This already bit us once. The tunnel died overnight, the URL compiled into
+the installed APK stopped existing, and the app could not reach anything.
+
+An unpinned ngrok URL is random and DIFFERENT on every single start. The
+address is baked into the APK at build time (--dart-define), so a new URL
+means a new build before you can demo. The free plan includes ONE permanent
+domain. Two minutes now saves the demo.
+
+  *** ALREADY DONE — Sun 09 Aug. Nothing to do here unless the domain is
+      released from the ngrok account. Recorded for the write-up. ***
+
+      Reserved domain : renovator-sublime-pep.ngrok-free.dev
+      Wired in        : src/backend/.env  ->  NGROK_DOMAIN
+      Verified        : tunnel container destroyed and recreated, URL came
+                        back identical. The installed APK still connects
+                        with no rebuild.
+
+docker-compose.yml reads NGROK_DOMAIN, so the steps below are only needed if
+you ever have to move to a different domain:
+
+  1. Go to  https://dashboard.ngrok.com  ->  Domains  ->  Create Domain
+  2. Copy the domain it gives you, e.g.  nirvaha-team109.ngrok-free.app
+     (bare hostname — NO https:// prefix)
+  3. Put it in  src/backend/.env :
+
+       NGROK_DOMAIN=nirvaha-team109.ngrok-free.app
+
+  4. Start the tunnel:
+       docker compose --profile tunnel up -d -V ngrok
+
+  5. Confirm it came up on YOUR domain, not a random one:
+       curl -s http://localhost:4040/api/tunnels
+
+  6. Build the APK once against it, and never again:
+       cd src/nirvaha
+       flutter build apk --release --dart-define=API_BASE_URL=https://<your-domain>
+       adb install -r build/app/outputs/flutter-apk/app-release.apk
+
+If NGROK_DOMAIN is empty, the tunnel refuses to start and says so. That is
+deliberate: a loud failure now beats a silent random URL at 11am. The rest of
+the stack (api, postgres, redis, minio) is unaffected and still starts.
+
+
+---------------------------------------------------------------------
+2b. COLD START — LAPTOP WAS OFF / SLEPT / DOCKER QUIT
+---------------------------------------------------------------------
+
+Symptom: app shows "Can't reach Nirvaha", or curl to the tunnel returns 404.
+Recovery is under two minutes.
+
+  1. Start Docker Desktop and wait for the whale icon to settle.
+     Check it is really up:      docker ps
+
+  2. Bring the stack back:
+       cd src/backend
+       docker compose up -d                      # core services
+       docker compose --profile tunnel up -d     # + public tunnel
+
+  3. Wait for health (takes ~20s, do not panic-restart):
+       curl -s http://localhost:3000/api/health
+
+  4. Vendor dashboard:
+       cd src/vendor-dashboard && npm run dev     # http://localhost:5173
+
+YOUR DATA IS SAFE. Postgres writes to the named volume `pgdata`, which
+survives restarts, reboots and `docker compose down`. Verified: after a full
+Docker restart the demo account still had its lifetime total and collection
+history. Only `docker compose down -v` destroys it — never type -v.
+
+IF THE URL CHANGED (you had not claimed a static domain):
+  Fastest fix, NO rebuild — on the phone:
+     Profile -> gear icon -> Advanced -> paste the new URL -> Save -> Check
+  It is stored on the device and OVERRIDES the compiled-in address.
+
+  Do NOT edit lib/services/api_service.dart. That value is only a fallback
+  for builds with no --dart-define, and editing it does nothing until you
+  rebuild AND clear the saved URL (adb shell pm clear com.nirvaha.nirvaha).
+
+
+  >>> WATCH TRAFFIC LIVE: http://localhost:4040 <<<
+
+The ngrok inspector shows every request the phone makes — method, status,
+headers, request body, response body, timing. Leave it open during the demo.
+It is the fastest way to tell WHERE a failing scan broke:
+
+  - request never appears        -> phone is not reaching the tunnel
+                                    (check mobile data, check the URL in the app)
+  - request appears, 401         -> app is not sending the JWT (log in again)
+  - request appears, 503         -> backend reached Gemini+Ollama and both failed
+                                    (see `docker compose logs api`)
+  - request appears, 201, slow   -> working, just waiting on the AI
+
+You can also replay any past request from that page, which saves re-taking a
+photo while debugging.
+
+
+---------------------------------------------------------------------
+3. POINT THE FLUTTER APP AT IT
+---------------------------------------------------------------------
+
+Public tunnel — USE THIS IF YOU HAVE NO SHARED WIFI (phone on mobile data):
+  cd src/nirvaha
+  flutter run --dart-define=API_BASE_URL=https://<your-ngrok-url>
+
+  The USB cable only INSTALLS the app. API traffic goes:
+      phone -> mobile data -> ngrok -> your laptop
+  Phone and laptop do NOT need to be on the same network.
+  No Windows Firewall rule needed for this path.
+
+  Sanity check FIRST, from the phone's browser on mobile data:
+      https://<your-ngrok-url>/api/health      -> must return {"status":"ok"}
+
+No USB cable? Build an APK and sideload it:
+  flutter build apk --debug --dart-define=API_BASE_URL=https://<your-ngrok-url>
+  -> build/app/outputs/flutter-apk/app-debug.apk
+
+Release APK for the phone (this is the one to install for a demo):
+  flutter build apk --release --dart-define=API_BASE_URL=https://<your-ngrok-url>
+  adb install -r build/app/outputs/flutter-apk/app-release.apk
+
+  *** NEVER build without --dart-define. ***
+  The flag is compiled INTO the APK. Drop it and the app silently falls back
+  to http://10.0.2.2:3000 — the Android EMULATOR's loopback address, which
+  does not exist on a real phone. Everything then fails at once and it looks
+  like the backend or the login is broken when neither is. Symptom: login
+  spins and fails, and no request ever reaches the tunnel
+  (check http://localhost:4040 — an empty request list means the app never
+  called out).
+
+  If the app is already installed and behaving oddly after a URL change:
+      adb shell pm clear com.nirvaha.nirvaha
+  A URL saved earlier from the Advanced screen is persisted and OVERRIDES
+  --dart-define, so reinstalling alone will not shake it loose. Clearing also
+  signs you out, which is expected.
+
+Same wifi, no tunnel (find your LAN IP with `ipconfig`):
+  flutter run --dart-define=API_BASE_URL=http://192.168.x.x:3000
+
+Android emulator on this machine:
+  flutter run --dart-define=API_BASE_URL=http://10.0.2.2:3000
+
+Do NOT use localhost — on a phone that means the phone itself.
+
+
+---------------------------------------------------------------------
+4. VENDOR WEBSITE  (B2B routing dashboard)
+---------------------------------------------------------------------
+
+React + Vite + Tailwind. A static site — the BROWSER calls the API, so it
+needs no tunnel of its own when it runs on the same laptop as Docker.
+
+First time only:
+  cd src/vendor-dashboard
+  npm install
+  cp .env.example .env
+
+Run it:
+  npm run dev
+  -> http://localhost:5173
+
+.env points at the backend. Same laptop as Docker = leave it alone:
+  VITE_API_BASE_URL=http://localhost:3000
+
+WHY LOCAL AND NOT NETLIFY:
+  - Vite bakes VITE_API_BASE_URL into the JS bundle AT BUILD TIME. A deployed
+    site is frozen to whatever URL you built with; if ngrok rotates, the
+    deployed site is dead until you rebuild AND redeploy.
+  - A Netlify page is HTTPS and cannot call http://localhost:3000 at all
+    (browsers block mixed content), so deploying removes your local fallback.
+  - You demo both screens on the same laptop anyway.
+
+IF YOU DO WANT IT DEPLOYED (optional, only after the demo is rehearsed):
+  # claim the ngrok STATIC domain first (section 2) or this breaks on restart
+  # src/vendor-dashboard/.env
+  VITE_API_BASE_URL=https://<your-static-domain>.ngrok-free.app
+
+  npm run build          # bakes that URL into dist/
+  # drag the dist/ folder onto https://app.netlify.com/drop
+
+The backend already allows this: CORS is open and the dashboard sends the
+ngrok-skip-browser-warning header. Verified with a Netlify-origin preflight.
+
+
+REALTIME (WebSockets — no refresh needed)
+---------------------------------------------------------------------
+The backend runs a Socket.IO gateway. It pushes on every change, so the
+dashboard updates itself the moment a household scans:
+
+  bin:updated      a household added plastic  -> zone card flashes blue
+  route:claimed    a vendor took a zone       -> it leaves the list
+  route:collected  a route was completed      -> moves to History
+
+Check the channel is up:
+  curl "http://localhost:3000/socket.io/?EIO=4&transport=polling"    -> 200
+
+In the UI: sidebar shows "Live" (green dot) and the header shows a
+"Realtime" pill. If it says "Offline"/"Reconnecting", the socket dropped and
+the dashboard falls back to polling every 20s — still works, just slower.
+
+THREE TABS (all functional):
+  Available Routes  -> claim a zone
+  Scheduled         -> your claimed routes + "Mark Collected"
+  Collection History-> zones you already collected
+
+Vendor endpoints:
+  GET  /api/vendor/routes
+  POST /api/vendor/claim-route      {zone, vendorId}
+  POST /api/vendor/complete-route   {zone, vendorId}
+  GET  /api/vendor/claimed/:vendorId
+  GET  /api/vendor/history/:vendorId
+
+
+HOW THE THREE PIECES TALK
+---------------------------------------------------------------------
+   PHONE (mobile data)                     LAPTOP BROWSER
+   Flutter app                             Vendor website :5173
+        |                                        |
+        |  HTTPS                                 |  HTTP, direct
+        v                                        |  (no tunnel needed)
+   ngrok tunnel                                  |
+        |                                        |
+        +----------------+     +-----------------+
+                         v     v
+                 NestJS :3000  (Docker)
+                 Postgres | Redis | MinIO | Gemini
+
+  ngrok exists ONLY because the phone is a different machine.
+  The vendor website runs on the same laptop as Docker, so it talks to
+  localhost:3000 directly.
+
+  BOTH FRONTENDS READ AND WRITE THE SAME DATABASE — a scan added from the
+  phone shows up on the vendor dashboard within 15 seconds.
+
+
+THE FULL DEMO LOOP (two screens, one system)
+---------------------------------------------------------------------
+  1. PHONE : scan a bottle -> "Add to Digital Bin"
+             (bin bar moves; pickup stays locked under 2.0 kg)
+  2. PHONE : scan more until the bin unlocks
+  3. LAPTOP: vendor dashboard updates INSTANTLY over WebSocket — no refresh
+             -> blue banner "New plastic just added in <zone>"
+             -> the zone card appears with total kg + household count
+  4. LAPTOP: click "Claim Route"
+             -> every household in that zone flips to SCHEDULED at once
+  5. LAPTOP: the zone leaves the list and appears under the Scheduled tab
+  6. LAPTOP: click "Mark Collected" -> it moves to Collection History
+
+Reset the board between rehearsals (clears all bins, keeps scans/users):
+  docker compose exec postgres psql -U nirvaha -d nirvaha -c "DELETE FROM digital_bin_items;"
+
+
+---------------------------------------------------------------------
+5. AI PROVIDER SWITCHING
+---------------------------------------------------------------------
+
+Edit src/backend/.env then restart:  docker compose up -d -V api
+
+  AI_PROVIDER=auto      # Gemini first, all 3 keys, then Ollama  (DEFAULT)
+  AI_PROVIDER=gemini    # cloud only, fail if unavailable
+  AI_PROVIDER=ollama    # force local model
+
+Verify which engine is live:
+  curl http://localhost:3000/api/health        # look at the "ai" block
+
+Every scan response says which engine answered:
+  "ai_provider": "gemini" | "ollama"
+  "ai_model":    "gemini-3.6-flash" | "qwen2.5vl:3b"
+
+
+---------------------------------------------------------------------
+6. TEST A REAL SCAN
+---------------------------------------------------------------------
+
+  curl -X POST http://localhost:3000/api/scan -F "image=@photo.jpg"
+
+Full end-to-end suite (health, auth, scan, cache, history, logout):
+
+  bash scripts/smoke.sh
+
+
+---------------------------------------------------------------------
+7. WHEN SOMETHING BREAKS
+---------------------------------------------------------------------
+
+Logs:
+  docker compose logs api --tail 50
+  docker compose logs -f api            # follow live
+  docker compose logs ngrok --tail 20
+
+Rebuild after changing CODE only:
+  npm run build
+  docker compose up -d -V api
+
+Added or changed a DEPENDENCY (package.json)?  YOU MUST REBUILD THE IMAGE.
+The api container has its own node_modules volume that shadows the host, so
+`npm install` on your laptop is NOT enough — the container will not see it
+and you will get "Cannot find module 'x'" at startup:
+
+  docker compose build api
+  docker compose up -d -V api
+
+This is what happened when socket.io was added. If the WebSocket gateway does
+not start, or a route is missing after a pull, run those two commands first.
+
+Full reset (keeps your data):
+  docker compose down && docker compose up -d
+
+Scan returns 503:
+  -> all 3 Gemini keys failed AND Ollama unreachable
+  -> check `docker compose logs api` for the per-key failure reason
+  -> check GEMINI_MODEL in .env is  gemini-3.6-flash
+     (gemini-2.5-flash and gemini-1.5-flash are RETIRED — they 404)
+
+Ollama unreachable from the container:
+  curl http://localhost:11434/api/tags        # is Ollama running at all?
+  docker compose exec api node -e "require('http').get('http://host.docker.internal:11434/api/tags',r=>console.log(r.statusCode))"
+
+Port already in use:
+  docker compose down
+  netstat -ano | findstr "3000"
+
+
+---------------------------------------------------------------------
+8. PRE-DEMO CHECKLIST  (run 5 minutes before)
+---------------------------------------------------------------------
+
+  [ ] STATIC DOMAIN claimed and in .env  (see section 2 — do this Saturday,
+      not Sunday. A random URL means rebuilding the APK before you can demo.)
+  [ ] docker compose --profile tunnel up -d
+  [ ] docker compose ps                  -> api/postgres/redis/minio healthy
+  [ ] curl http://localhost:3000/api/health   -> status:ok
+  [ ] curl -s http://localhost:4040/api/tunnels  -> confirm the URL
+  [ ] curl -H "ngrok-skip-browser-warning: true" <URL>/api/health
+  [ ] open <URL>/api/health on the PHONE, on MOBILE DATA (not venue wifi)
+  [ ] app: log in as test@gmail.com / test@1234 -> header shows "Connected"
+  [ ] one real scan from the app -> check "ai_provider" in the response
+  [ ] vendor site running:  cd src/vendor-dashboard && npm run dev  -> :5173
+  [ ] dashboard shows at least one zone (scan from the phone if empty)
+  [ ] leave http://localhost:4040 open — it shows every request live
+  [ ] phone charged, cable packed, laptop on mains power
+
+
+---------------------------------------------------------------------
+SECRETS — src/backend/.env is gitignored. Never commit it.
+It holds GEMINI_API_KEYS, NGROK_AUTHTOKEN, JWT_SECRET.
+Teammates copy .env.example -> .env and fill in their own.
+=====================================================================

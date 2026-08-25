@@ -1,0 +1,57 @@
+# ── Secrets ───────────────────────────────────────────────
+# .env holds real Gemini API keys. Never commit it.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+# ngrok config contains your authtoken
+ngrok.yml
+ngrok.yaml
+
+# ── Dependencies & build output ───────────────────────────
+node_modules/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# ── Flutter / Android ─────────────────────────────────────
+# (src/nirvaha/.gitignore covers most of this; these are belt-and-braces)
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+*.apk
+*.aab
+*.jks
+*.keystore
+local.properties
+google-services.json
+lib/firebase_options.dart
+.gradle/
+.cxx/
+
+# ── Editors ───────────────────────────────────────────────
+*.iml
+*.ipr
+*.iws
+.idea/
+*.swp
+
+# ── Python ────────────────────────────────────────────────
+__pycache__/
+*.pyc
+.venv/
+
+# ── OS ────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Scratch ───────────────────────────────────────────────
+*.log
+*.bak
+*.tmp
+_t*.jpg
+_a*.jpg
+scratch/

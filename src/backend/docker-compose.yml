@@ -1,0 +1,117 @@
+services:
+  api:
+    build:
+      context: .
+      target: development
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - nirvaha-net
+
+  # Optional public tunnel. Behind the "tunnel" profile so a plain
+  # `docker compose up -d` behaves exactly as before and never starts it.
+  # Start with:  docker compose --profile tunnel up -d
+  #
+  # NGROK_DOMAIN pins the URL. Without it ngrok hands out a NEW random hostname
+  # every single start — which silently bricks the installed APK, because the
+  # address is compiled into the app at build time. A free ngrok account
+  # includes one permanent domain: claim it at
+  #   https://dashboard.ngrok.com/domains
+  # and put the bare hostname (no https://) in .env as NGROK_DOMAIN.
+  #
+  # If NGROK_DOMAIN is unset the tunnel refuses to start with an obvious error,
+  # rather than quietly serving a random URL nothing is pointed at. The rest of
+  # the stack is unaffected — the placeholder only reaches ngrok itself.
+  ngrok:
+    image: ngrok/ngrok:latest
+    profiles: ["tunnel"]
+    command: http api:3000 --domain=${NGROK_DOMAIN:-NGROK_DOMAIN-IS-NOT-SET-IN-DOT-ENV} --log stdout
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    ports:
+      - '4040:4040'   # request inspector — http://localhost:4040
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - nirvaha-net
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-nirvaha}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-nirvaha_dev_pw}
+      POSTGRES_DB: ${POSTGRES_DB:-nirvaha}
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-nirvaha}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - nirvaha-net
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - nirvaha-net
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-nirvaha}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-nirvaha_dev_pw}
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    volumes:
+      - miniodata:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - nirvaha-net
+
+volumes:
+  pgdata:
+  redisdata:
+  miniodata:
+
+networks:
+  nirvaha-net:
+    driver: bridge
