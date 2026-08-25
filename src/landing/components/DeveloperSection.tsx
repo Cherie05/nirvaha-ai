@@ -56,7 +56,7 @@ export default function DeveloperSection() {
               <ArrowUpRight className="w-4 h-4 text-neutral-600 group-hover:text-[#10b981] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </a>
 
-            <a href="https://linkedin.com/in/arunv" target="_blank" rel="noopener noreferrer" 
+            <a href="https://www.linkedin.com/in/arunvpp05/" target="_blank" rel="noopener noreferrer" 
                className="group flex items-center justify-between p-4 border border-neutral-800 hover:border-[#10b981] hover:bg-white/5 transition-all text-neutral-400 hover:text-white">
               <div className="flex items-center gap-4">
                 <LinkedinIcon />
@@ -65,7 +65,7 @@ export default function DeveloperSection() {
               <ArrowUpRight className="w-4 h-4 text-neutral-600 group-hover:text-[#10b981] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </a>
 
-            <a href="https://your-portfolio.com" target="_blank" rel="noopener noreferrer" 
+            <a href="https://arunvpp.xyz/" target="_blank" rel="noopener noreferrer" 
                className="group flex items-center justify-between p-4 border border-neutral-800 hover:border-[#10b981] hover:bg-white/5 transition-all text-neutral-400 hover:text-white">
               <div className="flex items-center gap-4">
                 <GlobeIcon />
