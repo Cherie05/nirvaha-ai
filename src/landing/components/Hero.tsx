@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export default function Hero() {
   return (
-    <section className="relative w-full h-[90vh] min-h-[650px] overflow-hidden flex flex-col justify-between">
+    <section className="relative w-full min-h-screen overflow-hidden flex flex-col justify-between">
       {/* Background */}
       <Image src="/hero.jpg" alt="Plastic waste across Indian communities" fill sizes="100vw" className="object-cover" priority />
       <div className="absolute inset-0 bg-black/60" />
@@ -25,13 +25,13 @@ export default function Hero() {
 
       {/* Main Text - Left aligned, huge, anchored to container */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-8 pb-12 flex flex-col justify-end h-full">
-        <h1 className="text-[clamp(3.5rem,9vw,9rem)] font-black leading-[0.85] tracking-tighter text-[#c5e017] uppercase">
+        <h1 className="text-[clamp(3.5rem,9vw,9rem)] font-black leading-[0.95] tracking-tighter text-[#c5e017] uppercase">
           SCAN IT,
         </h1>
-        <h1 className="text-[clamp(3.5rem,9vw,9rem)] font-black leading-[0.85] tracking-tighter text-white uppercase">
+        <h1 className="text-[clamp(3.5rem,9vw,9rem)] font-black leading-[0.95] tracking-tighter text-white uppercase">
           SORT IT,
         </h1>
-        <h1 className="text-[clamp(3.5rem,9vw,9rem)] font-black leading-[0.85] tracking-tighter text-[#c5e017] uppercase">
+        <h1 className="text-[clamp(3.5rem,9vw,9rem)] font-black leading-[0.95] tracking-tighter text-[#c5e017] uppercase">
           COLLECT IT.
         </h1>
         
