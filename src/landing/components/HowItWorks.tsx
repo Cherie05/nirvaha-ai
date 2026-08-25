@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 
 const STEPS = [
-  { label: 'SCAN', desc: 'Shopkeeper photographs plastic waste with the Nirvaha Flutter app. Gemini 1.5 Flash identifies the exact resin code in 2.2 seconds.' },
+  { label: 'SCAN', desc: 'Users photograph plastic waste with the Nirvaha Flutter app. Gemini 1.5 Flash identifies the exact resin code in 2.2 seconds.' },
   { label: 'CLASSIFY', desc: 'AI returns resin type (PET 1 through OTHER 7), estimated weight, recyclability index, and automated sorting advice.' },
   { label: 'AGGREGATE', desc: 'Each classified item enters a virtual Digital Bin. Weight accumulates across days — no daily collection trips needed.' },
   { label: 'ROUTE', desc: 'At 2.0 KG, the bin triggers a pickup. Vendors claim entire neighborhood clusters via the live dashboard with OpenStreetMap routing.' },

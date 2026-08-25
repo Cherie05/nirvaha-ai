@@ -25,7 +25,7 @@ export default function FieldStory() {
               Vineeth runs a general store near Warangal. He keeps PET water bottles aside because he recognizes them. Everything else — LDPE bags, PP cups, HDPE containers — goes straight into mixed waste because he can't tell them apart.
             </p>
             <p className="text-neutral-700 leading-relaxed mb-8">
-              Nirvaha eliminates this barrier. Shopkeepers point their phone camera at any plastic item and get the exact resin code, estimated weight, and sorting advice in 2.2 seconds. No training needed. Items accumulate in a virtual Digital Bin. At 2.0 KG, the system triggers a profitable neighborhood pickup route for scrap vendors.
+              Nirvaha eliminates this barrier. Anyone — from shopkeepers and restaurant staff to individual households — points their phone camera at any plastic item and get the exact resin code, estimated weight, and sorting advice in 2.2 seconds. No training needed. Items accumulate in a virtual Digital Bin. At 2.0 KG, the system triggers a profitable neighborhood pickup route for scrap vendors.
             </p>
 
             <div className="grid grid-cols-3 gap-4 border-t border-neutral-300 pt-6">

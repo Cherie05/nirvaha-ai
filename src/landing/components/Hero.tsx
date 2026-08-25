@@ -38,7 +38,7 @@ export default function Hero() {
         {/* Supporting description right next to the massive text on desktop */}
         <div className="mt-8 max-w-md border-l-2 border-[#10b981] pl-4">
           <p className="text-white/80 text-sm md:text-base leading-relaxed">
-            Eliminating the 30-minute sorting barrier for neighborhood shops. Identifying 7 resin codes instantly with Gemini AI.
+            Eliminating the 30-minute sorting barrier for households, restaurants, and neighborhood shops. Identifying 7 resin codes instantly with Gemini AI.
           </p>
         </div>
       </div>

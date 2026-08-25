@@ -17,22 +17,22 @@ export default function ProblemSection() {
           <div>
             <p className="font-mono-label text-[#10b981] text-sm mb-6">01</p>
             <h3 className="text-xl font-black uppercase leading-tight mb-4">
-              SHOPKEEPERS CAN'T TELL{' '}
+              PEOPLE CAN'T TELL{' '}
               <span className="highlight-text">PET FROM HDPE</span>
             </h3>
             <p className="text-sm text-neutral-700 leading-relaxed">
-              India has 7 plastic resin codes. A shopkeeper recognizes water bottles but can't distinguish LDPE film from PP containers. Without identification, everything goes to general waste.
+              India has 7 plastic resin codes. Most people recognize water bottles but can't distinguish LDPE film from PP containers. Without identification, everything goes to general waste.
             </p>
           </div>
 
           <div>
             <p className="font-mono-label text-[#10b981] text-sm mb-6">02</p>
             <h3 className="text-xl font-black uppercase leading-tight mb-4">
-              ONE SHOP'S PLASTIC{' '}
+              A SINGLE LOCATION'S PLASTIC{' '}
               <span className="highlight-text">ISN'T WORTH A TRIP</span>
             </h3>
             <p className="text-sm text-neutral-700 leading-relaxed">
-              A scrap dealer burns ₹45 in fuel driving to collect 200g of mixed plastic worth ₹4. The economics don't work for single-shop pickups. Dealers simply refuse.
+              A scrap dealer burns ₹45 in fuel driving to collect 200g of mixed plastic worth ₹4. The economics don't work for single-location pickups. Dealers simply refuse.
             </p>
           </div>
 
@@ -43,7 +43,7 @@ export default function ProblemSection() {
               <span className="highlight-text">A PROFITABLE COMMODITY</span>
             </h3>
             <p className="text-sm text-neutral-700 leading-relaxed">
-              Sorted PET fetches ₹28–35/kg. HDPE reaches ₹38/kg. When 8 shops in a neighborhood each cross the 2.0 KG Digital Bin threshold, a single route yields ₹400+ profit for vendors.
+              Sorted PET fetches ₹28–35/kg. HDPE reaches ₹38/kg. When multiple households, restaurants, and shops in a cluster each cross the 2.0 KG Digital Bin threshold, a single route yields ₹400+ profit for vendors.
             </p>
           </div>
 
